@@ -2,7 +2,7 @@
 
 temp1=($(squeue))
 
-cmd1="/opt/slurm/bin/sbatch --dependency=afterany:"
+cmd1="sbatch --dependency=afterany:"
 
 counter1=0
 for i in "${temp1[@]}"; do
