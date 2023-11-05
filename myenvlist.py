@@ -3,6 +3,7 @@
 from filelock import FileLock
 import hickle
 import sys
+import time
 
 # set constants
 file_path = "/data/picasso/envlist.hkl"
@@ -46,7 +47,13 @@ with lock:
         clist = [envprefix + str(x) for x in range(int(nenvs))]
     else:
         # load hickle file
-        clist = hickle.load(file_path)
+        while i in range(int(time_out_secs/5)):
+            try:
+                clist = hickle.load(file_path)
+                break
+            except IOError or FileNotFoundError or OSError:
+                time.sleep(5)
+                continue
 
         if pmode == WRITE_MODE:
             # append item to end of list
