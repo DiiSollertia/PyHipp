@@ -21,30 +21,28 @@ if nargs > 3:
     print('Usage: envlist; envlist env; envlist envprefix nenvs')
     exit
 elif nargs > 2:
-    # creates or re-creates the list of environments
     pmode = RESET_MODE
-    # get prefix for environment name
     envprefix = sys.argv[1]
-    # get number of environments to create
     nenvs = sys.argv[2]
 elif nargs > 1:
-    # returns env to the list of environments
     pmode = WRITE_MODE
-    # get name of environment to return
     env = sys.argv[1]
 else:
-    # gets name of an environment to use
     pmode = READ_MODE
 
-# creates a lock for the file so it can only be accessed one at a time
 lock = FileLock(lock_path, timeout=time_out_secs)
 
 with lock:
     if pmode == RESET_MODE:
+<<<<<<< HEAD:myenvlist.py
         # create a list (named clist) of nevns environments with the 
         # prefix envprefix
         # add code here
         clist = [envprefix + str(x) for x in range(int(nenvs))]
+=======
+        clist1 = [*range(0,int(nenvs),1)]
+        clist = [envprefix + str(s) for s in clist1]
+>>>>>>> upstream/main:envlist.py
     else:
         # load hickle file
         while i in range(int(time_out_secs/5)):
@@ -57,11 +55,18 @@ with lock:
 
         if pmode == WRITE_MODE:
             # append item to end of list
+<<<<<<< HEAD:myenvlist.py
             # add code here
             clist.append(env)
         else:
             # get and remove env from clist
             # add code here
+=======
+            clist.append(env)
+        else:    
+            # pop first item off list
+            env = clist.pop(0)
+>>>>>>> upstream/main:envlist.py
             # return env name
             env = clist.pop(0)
             print(env)
